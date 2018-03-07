@@ -13,9 +13,7 @@ import {
 
 export default class Provider extends Component {
   state = {
-    img:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/New_SAT_Logo_%28vector%29.svg/220px-New_SAT_Logo_%28vector%29.svg.png",
-    name: "High School GPA",
+    student: ""
     value: ""
   }
 
@@ -38,14 +36,14 @@ export default class Provider extends Component {
         <Input
           label="Student"
           placeholder="student_key"
-          onChange={this.handleChange}
+          onChange={event => this.setState({ student: event.target.value })}
         />
         <Input
           label="Grade"
           value={this.state.value}
           onChange={this.handleChange}
         />
-        <Button primary onClick={this.props.submitScore}>
+        <Button primary onClick={this.props.submitScore(this.state.value)}>
           Submit
         </Button>
       </div>
