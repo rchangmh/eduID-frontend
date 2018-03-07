@@ -3,7 +3,8 @@ import { render } from "react-dom"
 import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom"
 import { Segment, Menu } from "semantic-ui-react"
 
-import View from "/src/View"
+import Student from "/src/Student"
+import Provider from "/src/Provider"
 
 const styles = {
   fontFamily: "sans-serif",
@@ -11,7 +12,7 @@ const styles = {
 }
 
 class App extends Component {
-  state = { activeItem: "Profile" }
+  state = { activeItem: "Student" }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -21,10 +22,10 @@ class App extends Component {
         <Menu inverted>
           <Menu.Item
             name="Student"
-            active={this.activeItem === "Student"}
+            active={this.state.activeItem === "Student"}
             onClick={this.handleItemClick}
             as={Link}
-            to={"/student"}
+            to={"/"}
           />
           <Menu.Item
             name="High School"
@@ -40,15 +41,17 @@ class App extends Component {
             as={Link}
             to={"/college"}
           />
-        </Menu>
-        <View />
-        <Switch>
-          <Route
-            exact
-            path="/view"
-            render={props => <View submit={this.onSubmit} />}
+          <Menu.Item
+            name="SAT/ACT"
+            active={this.activeItem === "SAT/ACT"}
+            onClick={this.handleItemClick}
+            as={Link}
+            to={"/satact"}
           />
-          <Route path="/view" component={View} />
+        </Menu>
+        <Switch>
+          <Route exact path="/" render={props => <Student />} />
+          <Route path="/provider" component={Provider} />
         </Switch>
       </div>
     )
