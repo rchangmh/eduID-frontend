@@ -11,36 +11,21 @@ import {
   Image
 } from "semantic-ui-react"
 
-export default class Student extends Component {
+export default class Consumer extends Component {
   state = {
-    activeItem: "Profile",
-    created: false,
-    menuItems: ["Profile", "Scores", "Colleges"],
-    scores: {
-      GPA: "86.6",
-      SAT: "1300"
-    },
-    colleges: [
+    activeItem: "Students",
+    menuItems: ["Students"],
+    students: [
       {
-        name: "University of Maryland",
+        name: "Ronald",
+        address: "",
+        email: "",
+        dob: "",
         image:
           "https://upload.wikimedia.org/wikipedia/en/thumb/3/3e/University_of_Maryland_seal.svg/1200px-University_of_Maryland_seal.svg.png",
-        status: ""
-      },
-      {
-        name: "Cornell University",
-        image:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png",
-        status: ""
-      },
-      {
-        name: "Carnegie Mellon University",
-        image:
-          "https://upload.wikimedia.org/wikipedia/en/thumb/b/bb/Carnegie_Mellon_University_seal.svg/1200px-Carnegie_Mellon_University_seal.svg.png",
-        status: ""
+        scores: []
       }
-    ],
-    fields: { Name: "", Address: "", Email: "", DOB: "" }
+    ]
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -58,7 +43,7 @@ export default class Student extends Component {
   collegeStyle = {}
 
   createId = () => {
-    this.setState({ created: true })
+    this.setState({})
   }
 
   render() {
@@ -80,41 +65,7 @@ export default class Student extends Component {
           </Grid.Column>
 
           <Grid.Column stretched width={12}>
-            {activeItem === "Profile" && (
-              <div style={this.profileStyles}>
-                {this.state.created ? (
-                  <div>
-                    <div>
-                      {Object.keys(this.state.fields).map(field => (
-                        <Input
-                          size="medium"
-                          label={[field]}
-                          style={{ padding: "10px" }}
-                          placeholder={field}
-                          addonBefore={field}
-                          onChange={event =>
-                            this.setState({
-                              fields: {
-                                ...this.state.fields,
-                                [field]: event.target.value
-                              }
-                            })
-                          }
-                        />
-                      ))}
-                    </div>
-                    <Button color="purple">Submit</Button>
-                  </div>
-                ) : (
-                  <div>
-                    <Button onClick={this.createId} color="green">
-                      Create
-                    </Button>
-                  </div>
-                )}
-              </div>
-            )}
-            {activeItem === "Scores" && (
+            {activeItem === "Students" && (
               <Card.Group>
                 {Object.entries(this.state.scores).map(([key, value]) => (
                   <Card>

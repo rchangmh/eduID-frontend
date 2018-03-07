@@ -5,6 +5,7 @@ import { Segment, Menu } from "semantic-ui-react"
 
 import Student from "/src/Student"
 import Provider from "/src/Provider"
+import Consumer from "/src/Consumer"
 
 const styles = {
   fontFamily: "sans-serif",
@@ -12,9 +13,14 @@ const styles = {
 }
 
 class App extends Component {
-  state = { activeItem: "Student" }
+  state = { activeItem: "" }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => {
+    console.log(this.state)
+    this.setState({
+      activeItem: name
+    })
+  }
 
   render() {
     return (
@@ -32,14 +38,7 @@ class App extends Component {
             active={this.activeItem === "High School"}
             onClick={this.handleItemClick}
             as={Link}
-            to={"/hs"}
-          />
-          <Menu.Item
-            name="College"
-            active={this.activeItem === "College"}
-            onClick={this.handleItemClick}
-            as={Link}
-            to={"/college"}
+            to={"/provider"}
           />
           <Menu.Item
             name="SAT/ACT"
@@ -48,10 +47,18 @@ class App extends Component {
             as={Link}
             to={"/satact"}
           />
+          <Menu.Item
+            name="College"
+            active={this.activeItem === "College"}
+            onClick={this.handleItemClick}
+            as={Link}
+            to={"/consumer"}
+          />
         </Menu>
         <Switch>
           <Route exact path="/" render={props => <Student />} />
           <Route path="/provider" component={Provider} />
+          <Route path="/consumer" component={Consumer} />
         </Switch>
       </div>
     )
