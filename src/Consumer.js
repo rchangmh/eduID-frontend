@@ -17,12 +17,11 @@ export default class Consumer extends Component {
     menuItems: ["Students"],
     students: [
       {
-        name: "Ronald",
-        address: "",
-        email: "",
-        dob: "",
-        image:
-          "https://upload.wikimedia.org/wikipedia/en/thumb/3/3e/University_of_Maryland_seal.svg/1200px-University_of_Maryland_seal.svg.png",
+        name: "Ronald Chang",
+        address: "1600 Pennsylvania Ave. NW",
+        email: "rchangmh@gmail.com",
+        dob: "10/13/1990",
+        image: "https://i.ytimg.com/vi/W6g8ShHEXns/maxresdefault.jpg",
         scores: []
       }
     ]
@@ -67,33 +66,21 @@ export default class Consumer extends Component {
           <Grid.Column stretched width={12}>
             {activeItem === "Students" && (
               <Card.Group>
-                {Object.entries(this.state.scores).map(([key, value]) => (
+                {this.state.students.map(student => (
                   <Card>
                     <Card.Content>
-                      {key === "SAT" && (
-                        <Image
-                          floated="right"
-                          size="small"
-                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/New_SAT_Logo_%28vector%29.svg/220px-New_SAT_Logo_%28vector%29.svg.png"
-                        />
-                      )}
-                      {key === "GPA" && (
-                        <Image
-                          floated="right"
-                          size="small"
-                          src="https://static.hudl.com/users/temp/3901769_ca93ff3295814d0eb689ed38b754d944.bmp"
-                        />
-                      )}
-                      <Card.Header>{value}</Card.Header>
-                      <Card.Meta>{key}</Card.Meta>
+                      <Image floated="right" size="small" src={student.image} />
+                      <Card.Header>{student.name}</Card.Header>
+                      <Card.Meta>Email: {student.email}</Card.Meta>
+                      <Card.Meta>Address: {student.address}</Card.Meta>
                       <Card.Description>
-                        <strong>Your {key} has been added.</strong>
+                        <strong>Applied</strong>
                       </Card.Description>
                     </Card.Content>
                     <Card.Content extra>
                       <div className="ui two buttons">
                         <Button basic color="green">
-                          Approve
+                          Accept
                         </Button>
                         <Button basic color="red">
                           Decline

@@ -45,7 +45,7 @@ class App extends Component {
             active={this.activeItem === "SAT/ACT"}
             onClick={this.handleItemClick}
             as={Link}
-            to={"/satact"}
+            to={"/provider"}
           />
           <Menu.Item
             name="College"
