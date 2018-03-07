@@ -25,19 +25,19 @@ export default class Student extends Component {
         name: "University of Maryland",
         image:
           "https://upload.wikimedia.org/wikipedia/en/thumb/3/3e/University_of_Maryland_seal.svg/1200px-University_of_Maryland_seal.svg.png",
-        status: ""
+        status: "Not Submitted"
       },
       {
         name: "Cornell University",
         image:
           "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png",
-        status: ""
+        status: "Not Submitted"
       },
       {
         name: "Carnegie Mellon University",
         image:
           "https://upload.wikimedia.org/wikipedia/en/thumb/b/bb/Carnegie_Mellon_University_seal.svg/1200px-Carnegie_Mellon_University_seal.svg.png",
-        status: ""
+        status: "Not Submitted"
       }
     ],
     fields: { Name: "", Address: "", Email: "", DOB: "" }
@@ -57,8 +57,16 @@ export default class Student extends Component {
 
   collegeStyle = {}
 
-  createId = () => {
-    this.setState({ created: true })
+  createId = () => {}
+
+  apply = e => {
+    console.log(e.target)
+    this.setState(prevState => ({
+      ...prevState,
+      colleges: {
+        ...prevState.colleges
+      }
+    }))
   }
 
   render() {
@@ -161,17 +169,35 @@ export default class Student extends Component {
                       <Image floated="right" size="mini" src={college.image} />
                       <Card.Header>{college.name}</Card.Header>
                       <Card.Meta>{college.name}</Card.Meta>
-                      <Card.Description>
-                        <strong>
-                          Your application has been submitted to {college.name}.
-                        </strong>
-                      </Card.Description>
+                      {college.status === "Submitted" && (
+                        <Card.Description>
+                          <p>Your application has been submitted.</p>
+                          <strong>Status: {college.status}</strong>
+                        </Card.Description>
+                      )}
                     </Card.Content>
                     <Card.Content extra>
-                      <div className="ui two buttons">
-                        <Button basic color="green">
-                          Apply
-                        </Button>
+                      <div>
+                        {college.status === "Not Submitted" && (
+                          <Button basic color="gray" onClick={this.apply}>
+                            Apply
+                          </Button>
+                        )}
+                        {college.status === "Pending" && (
+                          <Button basic color="yellow">
+                            Apply
+                          </Button>
+                        )}
+                        {college.status === "Accepted" && (
+                          <Button basic color="green">
+                            Apply
+                          </Button>
+                        )}
+                        {college.status === "Declined" && (
+                          <Button basic color="red">
+                            Declined
+                          </Button>
+                        )}
                       </div>
                     </Card.Content>
                   </Card>

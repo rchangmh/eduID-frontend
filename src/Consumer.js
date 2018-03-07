@@ -17,12 +17,23 @@ export default class Consumer extends Component {
     menuItems: ["Students"],
     students: [
       {
+        id: "0007",
         name: "Ronald Chang",
         address: "1600 Pennsylvania Ave. NW",
         email: "rchangmh@gmail.com",
         dob: "10/13/1990",
         image: "https://i.ytimg.com/vi/W6g8ShHEXns/maxresdefault.jpg",
-        scores: []
+        scores: [
+          {
+            name: "High School GPA",
+            value: "74"
+          },
+          {
+            name: "SAT Scores",
+            value: 1400
+          }
+        ],
+        status: "Pending"
       }
     ]
   }
@@ -44,6 +55,9 @@ export default class Consumer extends Component {
   createId = () => {
     this.setState({})
   }
+
+  handleAccept = () => {}
+  handleDecline = () => {}
 
   render() {
     const { activeItem } = this.state
@@ -71,18 +85,31 @@ export default class Consumer extends Component {
                     <Card.Content>
                       <Image floated="right" size="small" src={student.image} />
                       <Card.Header>{student.name}</Card.Header>
-                      <Card.Meta>Email: {student.email}</Card.Meta>
-                      <Card.Meta>Address: {student.address}</Card.Meta>
+                      <Card.Meta>{student.id}</Card.Meta>
                       <Card.Description>
-                        <strong>Applied</strong>
+                        <p>
+                          <strong>Address:</strong> {student.address}
+                        </p>
+                        <p>
+                          <strong>Email:</strong> {student.email}
+                        </p>
+                        <p>
+                          <strong>DOB:</strong> {student.dob}
+                        </p>
+                        {student.scores.map(score => (
+                          <p>
+                            <strong>{score.name}: </strong>
+                            {score.value}
+                          </p>
+                        ))}
                       </Card.Description>
                     </Card.Content>
                     <Card.Content extra>
                       <div className="ui two buttons">
-                        <Button basic color="green">
+                        <Button basic color="green" onClick={this.handleAccept}>
                           Accept
                         </Button>
-                        <Button basic color="red">
+                        <Button basic color="red" onClick={this.handleDecline}>
                           Decline
                         </Button>
                       </div>
