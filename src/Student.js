@@ -20,27 +20,42 @@ export default class Student extends Component {
       GPA: "86.6",
       SAT: "1300"
     },
-    colleges: [
-      {
+    colleges: {
+      UMaryland: {
         name: "University of Maryland",
         image:
           "https://upload.wikimedia.org/wikipedia/en/thumb/3/3e/University_of_Maryland_seal.svg/1200px-University_of_Maryland_seal.svg.png",
         status: "Not Submitted"
       },
-      {
+      Cornell: {
         name: "Cornell University",
         image:
           "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png",
         status: "Not Submitted"
       },
-      {
+      CMU: {
         name: "Carnegie Mellon University",
         image:
           "https://upload.wikimedia.org/wikipedia/en/thumb/b/bb/Carnegie_Mellon_University_seal.svg/1200px-Carnegie_Mellon_University_seal.svg.png",
         status: "Not Submitted"
       }
-    ],
+    },
     fields: { Name: "", Address: "", Email: "", DOB: "" }
+  }
+
+  createId = () => {
+    fetch("http://httpbin.org/uuid", {
+      method: "GET"
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log(response.status)
+          return response
+        } else {
+          console.log(response.status)
+        }
+      })
+      .catch(console.error)
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -53,18 +68,15 @@ export default class Student extends Component {
     width: "300px"
   }
 
-  scoresStyle = {}
-
-  collegeStyle = {}
-
-  createId = () => {}
-
-  apply = e => {
-    console.log(e.target)
+  apply = key => {
     this.setState(prevState => ({
       ...prevState,
       colleges: {
-        ...prevState.colleges
+        ...prevState.colleges,
+        UMaryland: {
+          ...prevState.colleges.UMaryland,
+          status: "Pending"
+        }
       }
     }))
   }
@@ -163,7 +175,7 @@ export default class Student extends Component {
             )}
             {activeItem === "Colleges" && (
               <Card.Group>
-                {this.state.colleges.map(college => (
+                {Object.entries(this.state.colleges).map(([key, college]) => (
                   <Card>
                     <Card.Content>
                       <Image floated="right" size="mini" src={college.image} />
@@ -179,22 +191,20 @@ export default class Student extends Component {
                     <Card.Content extra>
                       <div>
                         {college.status === "Not Submitted" && (
-                          <Button basic color="gray" onClick={this.apply}>
+                          <Button color="gray" onClick={key => this.apply()}>
                             Apply
                           </Button>
                         )}
                         {college.status === "Pending" && (
-                          <Button basic color="yellow">
-                            Apply
+                          <Button disabled color="yellow">
+                            Pending
                           </Button>
                         )}
                         {college.status === "Accepted" && (
-                          <Button basic color="green">
-                            Apply
-                          </Button>
+                          <Button color="green">Accepted</Button>
                         )}
                         {college.status === "Declined" && (
-                          <Button basic color="red">
+                          <Button disabled color="red">
                             Declined
                           </Button>
                         )}
