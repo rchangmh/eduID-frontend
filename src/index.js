@@ -43,21 +43,26 @@ class App extends Component {
     }
   }
 
-  submitHSScore = newValue => {
-    this.setState(prevState => ({
-      ...prevState,
-      students: {
-        ...prevState.students,
-        a: {
-          ...prevState.students.a,
-          scores: {
-            ...prevState.students.a.GPA,
-            value: newValue
-          }
-        }
-      }
-    }))
-  }
+  submitHSScore = () => {}
+
+  // submitHSScore = newValue => {
+  //   this.setState(prevState => ({
+  //     ...prevState,
+  //     students: {
+  //       ...prevState.students,
+  //       a: {
+  //         ...prevState.students.a,
+  //         scores: {
+  //           ...prevState.students.a.scores,
+  //           GPA: {
+  //             ...prevState.students.a.scores.GPA,
+  //             value: newValue
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }))
+  // }
 
   handleItemClick = (e, { name }) => {
     console.log(this.state)
@@ -120,7 +125,10 @@ class App extends Component {
             path="/provider"
             render={props => <Provider submitScore={this.submitHSScore} />}
           />
-          <Route path="/consumer" component={Consumer} />
+          <Route
+            path="/consumer"
+            render={props => <Consumer students={this.state.students.a} />}
+          />
           <Route path="/satact" component={Satact} />
         </Switch>
       </div>

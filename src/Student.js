@@ -47,9 +47,16 @@ export default class Student extends Component {
   }
 
   createId = () => {
-    fetch("http://52.170.82.100:3000/api/Student")
+    var myHeaders = new Headers()
+    myHeaders.append("Accept", "application/json")
+
+    fetch("http://52.170.82.100:3000/api/Student", {
+      method: "GET",
+      headers: myHeaders
+    })
       .then(response => {
         console.log(response.status)
+        return response
       })
       .catch(console.error)
   }

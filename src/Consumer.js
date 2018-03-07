@@ -8,13 +8,15 @@ import {
   Segment,
   Button,
   Card,
-  Image
+  Image,
+  Icon
 } from "semantic-ui-react"
 
 export default class Consumer extends Component {
   state = {
     activeItem: "Applicants",
     menuItems: ["Applicants"],
+    status: "pending",
     students: [
       {
         name: "Satoshi Nakamoto",
@@ -25,7 +27,7 @@ export default class Consumer extends Component {
         scores: [
           {
             name: "High School GPA",
-            value: "89.4"
+            value: "89.6"
           },
           {
             name: "SAT Scores",
@@ -55,8 +57,12 @@ export default class Consumer extends Component {
     this.setState({})
   }
 
-  handleAccept = () => {}
-  handleDecline = () => {}
+  handleAccept = () => {
+    this.setState({ status: "accepted" })
+  }
+  handleDecline = () => {
+    this.setState({ status: "declined" })
+  }
 
   render() {
     const { activeItem } = this.state
@@ -64,7 +70,7 @@ export default class Consumer extends Component {
     return (
       <div>
         <Grid>
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <Menu fluid vertical tabular>
               {this.state.menuItems.map(menuItem => (
                 <Menu.Item
@@ -82,7 +88,13 @@ export default class Consumer extends Component {
                 {this.state.students.map(student => (
                   <Card>
                     <Card.Content>
-                      <Image floated="right" size="small" src={student.image} />
+                      <Icon
+                        name="user"
+                        size="large"
+                        circular
+                        style={{ margin: "10px" }}
+                      />
+
                       <Card.Header>{student.name}</Card.Header>
                       <Card.Meta>{student.id}</Card.Meta>
                       <Card.Description>
@@ -104,38 +116,27 @@ export default class Consumer extends Component {
                       </Card.Description>
                     </Card.Content>
                     <Card.Content extra>
-                      <div className="ui two buttons">
-                        <Button basic color="green" onClick={this.handleAccept}>
-                          Accept
-                        </Button>
-                        <Button basic color="red" onClick={this.handleDecline}>
-                          Decline
-                        </Button>
-                      </div>
-                    </Card.Content>
-                  </Card>
-                ))}
-              </Card.Group>
-            )}
-            {activeItem === "Colleges" && (
-              <Card.Group>
-                {this.state.colleges.map(college => (
-                  <Card>
-                    <Card.Content>
-                      <Image floated="right" size="mini" src={college.image} />
-                      <Card.Header>{college.name}</Card.Header>
-                      <Card.Meta>{college.name}</Card.Meta>
-                      <Card.Description>
-                        <strong>
-                          Your application has been submitted to {college.name}.
-                        </strong>
-                      </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <div className="ui two buttons">
-                        <Button basic color="green">
-                          Apply
-                        </Button>
+                      <div>
+                        {this.state.status === "pending" && (
+                          <div>
+                            <Button color="green" onClick={this.handleAccept}>
+                              Accept
+                            </Button>
+                            <Button color="red" onClick={this.handleDecline}>
+                              Decline
+                            </Button>
+                          </div>
+                        )}
+                        {this.state.status === "accepted" && (
+                          <Button disabled color="green">
+                            Accepted
+                          </Button>
+                        )}
+                        {this.state.status === "declined" && (
+                          <Button disabled color="red">
+                            Declined
+                          </Button>
+                        )}
                       </div>
                     </Card.Content>
                   </Card>
