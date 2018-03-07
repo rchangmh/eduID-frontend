@@ -25,7 +25,7 @@ export default class Satact extends Component {
     return (
       <div style={this.style}>
         <Input label="Student" placeholder="student_key" />
-        <Input label="Grade" placeholder="grade" />
+        <Input label="Grade" placeholder="" />
         <Button primary>Submit</Button>
       </div>
     )
