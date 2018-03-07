@@ -14,13 +14,40 @@ const styles = {
 }
 
 class App extends Component {
-  state = { activeItem: "" }
+  state = {
+    activeItem: "",
+    collegeView: true,
+    students: {
+      "0001": {
+        name: "Ronald Chang",
+        address: "1600 Pennsylvania Ave. NW",
+        email: "rchangmh@gmail.com",
+        dob: "10/13/1990",
+        image: "https://i.ytimg.com/vi/W6g8ShHEXns/maxresdefault.jpg",
+        scores: [
+          {
+            name: "High School GPA",
+            value: "74"
+          },
+          {
+            name: "SAT Scores",
+            value: 1400
+          }
+        ],
+        status: "Pending"
+      }
+    }
+  }
 
   handleItemClick = (e, { name }) => {
     console.log(this.state)
     this.setState({
       activeItem: name
     })
+  }
+
+  toggleCollegeView = () => {
+    this.setState({ collegeView: !this.state.collegeView })
   }
 
   render() {
@@ -49,7 +76,7 @@ class App extends Component {
             to={"/satact"}
           />
           <Menu.Item
-            name="College"
+            name="University of Maryland"
             active={this.activeItem === "College"}
             onClick={this.handleItemClick}
             as={Link}
@@ -57,8 +84,21 @@ class App extends Component {
           />
         </Menu>
         <Switch>
-          <Route exact path="/" render={props => <Student />} />
-          <Route path="/provider" component={Provider} />
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <Student
+                collegeView={this.state.collegeView}
+                toggleCollegeView={this.toggleCollegeView}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/provider"
+            render={props => <Provider submitScore={this.submitScore} />}
+          />
           <Route path="/consumer" component={Consumer} />
           <Route path="/satact" component={Satact} />
         </Switch>

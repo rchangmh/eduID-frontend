@@ -10,11 +10,12 @@ import {
   Card,
   Image
 } from "semantic-ui-react"
+import axios from "axios"
 
 export default class Student extends Component {
   state = {
     activeItem: "Profile",
-    created: false,
+    created: true,
     menuItems: ["Profile", "Scores", "Colleges"],
     scores: {
       GPA: "86.6",
@@ -44,16 +45,9 @@ export default class Student extends Component {
   }
 
   createId = () => {
-    fetch("http://httpbin.org/uuid", {
-      method: "GET"
-    })
+    fetch("http://52.170.82.100:3000/api/Student")
       .then(response => {
-        if (response.ok) {
-          console.log(response.status)
-          return response
-        } else {
-          console.log(response.status)
-        }
+        console.log(response.status)
       })
       .catch(console.error)
   }
@@ -69,6 +63,7 @@ export default class Student extends Component {
   }
 
   apply = key => {
+    this.props.toggleCollegeView
     this.setState(prevState => ({
       ...prevState,
       colleges: {

@@ -17,8 +17,7 @@ export default class Consumer extends Component {
     menuItems: ["Students"],
     students: [
       {
-        id: "0007",
-        name: "Ronald Chang",
+        name: "Satoshi Nakamoto",
         address: "1600 Pennsylvania Ave. NW",
         email: "rchangmh@gmail.com",
         dob: "10/13/1990",
