@@ -13,23 +13,23 @@ import {
 
 export default class Consumer extends Component {
   state = {
-    activeItem: "Students",
-    menuItems: ["Students"],
+    activeItem: "Applicants",
+    menuItems: ["Applicants"],
     students: [
       {
         name: "Satoshi Nakamoto",
         address: "1600 Pennsylvania Ave. NW",
-        email: "rchangmh@gmail.com",
-        dob: "10/13/1990",
+        email: "satoshin@gmx.com",
+        dob: "1/3/2009",
         image: "https://i.ytimg.com/vi/W6g8ShHEXns/maxresdefault.jpg",
         scores: [
           {
             name: "High School GPA",
-            value: "74"
+            value: "89.4"
           },
           {
             name: "SAT Scores",
-            value: 1400
+            value: 1490
           }
         ],
         status: "Pending"
@@ -64,7 +64,7 @@ export default class Consumer extends Component {
     return (
       <div>
         <Grid>
-          <Grid.Column width={this.state.menuItems.length}>
+          <Grid.Column width={4}>
             <Menu fluid vertical tabular>
               {this.state.menuItems.map(menuItem => (
                 <Menu.Item
@@ -77,7 +77,7 @@ export default class Consumer extends Component {
           </Grid.Column>
 
           <Grid.Column stretched width={12}>
-            {activeItem === "Students" && (
+            {true && (
               <Card.Group>
                 {this.state.students.map(student => (
                   <Card>

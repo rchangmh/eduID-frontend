@@ -8,7 +8,9 @@ import {
   Segment,
   Button,
   Card,
-  Image
+  Image,
+  Header,
+  Icon
 } from "semantic-ui-react"
 import axios from "axios"
 
@@ -97,75 +99,43 @@ export default class Student extends Component {
           <Grid.Column stretched width={12}>
             {activeItem === "Profile" && (
               <div style={this.profileStyles}>
-                {this.state.created ? (
-                  <div>
-                    <div>
-                      {Object.keys(this.state.fields).map(field => (
-                        <Input
-                          size="medium"
-                          label={[field]}
-                          style={{ padding: "10px" }}
-                          placeholder={field}
-                          addonBefore={field}
-                          onChange={event =>
-                            this.setState({
-                              fields: {
-                                ...this.state.fields,
-                                [field]: event.target.value
-                              }
-                            })
-                          }
-                        />
-                      ))}
-                    </div>
-                    <Button color="purple">Submit</Button>
-                  </div>
-                ) : (
-                  <div>
-                    <Button onClick={this.createId} color="green">
-                      Create
-                    </Button>
-                  </div>
-                )}
+                <Header as="h2" icon textAlign="center">
+                  <Icon name="user" circular />
+                  <Header.Content>{this.props.student.name}</Header.Content>
+                  <Header
+                    as="h4"
+                    icon="address book"
+                    content={this.props.student.address}
+                  />
+                  <Header
+                    as="h4"
+                    icon="at"
+                    content={this.props.student.email}
+                  />
+                  <Header
+                    as="h4"
+                    icon="address book"
+                    content={this.props.student.dob}
+                  />
+                </Header>
               </div>
             )}
             {activeItem === "Scores" && (
               <Card.Group>
-                {Object.entries(this.state.scores).map(([key, value]) => (
-                  <Card>
-                    <Card.Content>
-                      {key === "SAT" && (
-                        <Image
-                          floated="right"
-                          size="small"
-                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/New_SAT_Logo_%28vector%29.svg/220px-New_SAT_Logo_%28vector%29.svg.png"
-                        />
-                      )}
-                      {key === "GPA" && (
-                        <Image
-                          floated="right"
-                          size="small"
-                          src="https://static.hudl.com/users/temp/3901769_ca93ff3295814d0eb689ed38b754d944.bmp"
-                        />
-                      )}
-                      <Card.Header>{value}</Card.Header>
-                      <Card.Meta>{key}</Card.Meta>
-                      <Card.Description>
-                        <strong>Your {key} has been added.</strong>
-                      </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <div className="ui two buttons">
-                        <Button basic color="green">
-                          Approve
-                        </Button>
-                        <Button basic color="red">
-                          Decline
-                        </Button>
-                      </div>
-                    </Card.Content>
-                  </Card>
-                ))}
+                {Object.entries(this.props.student.scores).map(
+                  ([key, score]) => (
+                    <Card>
+                      <Card.Content>
+                        <Image floated="right" size="small" src={score.image} />
+                        <Card.Header>{score.value}</Card.Header>
+                        <Card.Meta>{score.name}</Card.Meta>
+                        <Card.Description>
+                          Your {score.name} has been posted.
+                        </Card.Description>
+                      </Card.Content>
+                    </Card>
+                  )
+                )}
               </Card.Group>
             )}
             {activeItem === "Colleges" && (

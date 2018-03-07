@@ -18,25 +18,45 @@ class App extends Component {
     activeItem: "",
     collegeView: true,
     students: {
-      "0001": {
-        name: "Ronald Chang",
+      a: {
+        name: "Satoshi Nakamoto",
         address: "1600 Pennsylvania Ave. NW",
-        email: "rchangmh@gmail.com",
-        dob: "10/13/1990",
+        email: "satoshin@gmx.com",
+        dob: "1/3/2009",
         image: "https://i.ytimg.com/vi/W6g8ShHEXns/maxresdefault.jpg",
-        scores: [
-          {
-            name: "High School GPA",
-            value: "74"
+        scores: {
+          GPA: {
+            name: "Bayside High School GPA",
+            image:
+              "https://static.hudl.com/users/temp/3901769_ca93ff3295814d0eb689ed38b754d944.bmp",
+            value: "89.6"
           },
-          {
+          SAT: {
             name: "SAT Scores",
-            value: 1400
+            image:
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/New_SAT_Logo_%28vector%29.svg/220px-New_SAT_Logo_%28vector%29.svg.png",
+            value: "1490"
           }
-        ],
+        },
         status: "Pending"
       }
     }
+  }
+
+  submitHSScore = newValue => {
+    this.setState(prevState => ({
+      ...prevState,
+      students: {
+        ...prevState.students,
+        a: {
+          ...prevState.students.a,
+          scores: {
+            ...prevState.students.a.GPA,
+            value: newValue
+          }
+        }
+      }
+    }))
   }
 
   handleItemClick = (e, { name }) => {
@@ -91,13 +111,14 @@ class App extends Component {
               <Student
                 collegeView={this.state.collegeView}
                 toggleCollegeView={this.toggleCollegeView}
+                student={this.state.students.a}
               />
             )}
           />
           <Route
             exact
             path="/provider"
-            render={props => <Provider submitScore={this.submitScore} />}
+            render={props => <Provider submitScore={this.submitHSScore} />}
           />
           <Route path="/consumer" component={Consumer} />
           <Route path="/satact" component={Satact} />
