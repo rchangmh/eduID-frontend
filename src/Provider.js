@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import { render } from "react-dom"
-import { Switch, Route, Link, Redirect } from "react-router-dom"
+import React, { Component } from 'react'
+import { render } from 'react-dom'
+import { Switch, Route, Link, Redirect } from 'react-router-dom'
 import {
   Input,
   Menu,
@@ -9,21 +9,21 @@ import {
   Button,
   Card,
   Image
-} from "semantic-ui-react"
+} from 'semantic-ui-react'
 
 export default class Provider extends Component {
   state = {
-    student: "",
-    value: ""
+    student: '',
+    value: ''
   }
 
   style = {
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "column",
-    justifyContent: "spaceBetween",
-    width: "300px",
-    margin: "50px"
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    justifyContent: 'spaceBetween',
+    width: '300px',
+    margin: '50px'
   }
 
   handleChange = event => {

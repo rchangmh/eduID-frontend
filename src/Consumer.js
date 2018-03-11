@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import { render } from "react-dom"
-import { Switch, Route, Link, Redirect } from "react-router-dom"
+import React, { Component } from 'react'
+import { render } from 'react-dom'
+import { Switch, Route, Link, Redirect } from 'react-router-dom'
 import {
   Input,
   Menu,
@@ -10,31 +10,31 @@ import {
   Card,
   Image,
   Icon
-} from "semantic-ui-react"
+} from 'semantic-ui-react'
 
 export default class Consumer extends Component {
   state = {
-    activeItem: "Applicants",
-    menuItems: ["Applicants"],
-    status: "pending",
+    activeItem: 'Applicants',
+    menuItems: ['Applicants'],
+    status: 'pending',
     students: [
       {
-        name: "Satoshi Nakamoto",
-        address: "1600 Pennsylvania Ave. NW",
-        email: "satoshin@gmx.com",
-        dob: "1/3/2009",
-        image: "https://i.ytimg.com/vi/W6g8ShHEXns/maxresdefault.jpg",
+        name: 'Satoshi Nakamoto',
+        address: '1600 Pennsylvania Ave. NW',
+        email: 'satoshin@gmx.com',
+        dob: '1/3/2009',
+        image: 'https://i.ytimg.com/vi/W6g8ShHEXns/maxresdefault.jpg',
         scores: [
           {
-            name: "High School GPA",
-            value: "89.6"
+            name: 'High School GPA',
+            value: '89.6'
           },
           {
-            name: "SAT Scores",
+            name: 'SAT Scores',
             value: 1490
           }
         ],
-        status: "Pending"
+        status: 'Pending'
       }
     ]
   }
@@ -42,11 +42,11 @@ export default class Consumer extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   profileStyles = {
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "column",
-    justifyContent: "spaceBetween",
-    width: "300px"
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    justifyContent: 'spaceBetween',
+    width: '300px'
   }
 
   scoresStyle = {}
@@ -58,10 +58,10 @@ export default class Consumer extends Component {
   }
 
   handleAccept = () => {
-    this.setState({ status: "accepted" })
+    this.setState({ status: 'accepted' })
   }
   handleDecline = () => {
-    this.setState({ status: "declined" })
+    this.setState({ status: 'declined' })
   }
 
   render() {
@@ -92,7 +92,7 @@ export default class Consumer extends Component {
                         name="user"
                         size="large"
                         circular
-                        style={{ margin: "10px" }}
+                        style={{ margin: '10px' }}
                       />
 
                       <Card.Header>{student.name}</Card.Header>
@@ -117,7 +117,7 @@ export default class Consumer extends Component {
                     </Card.Content>
                     <Card.Content extra>
                       <div>
-                        {this.state.status === "pending" && (
+                        {this.state.status === 'pending' && (
                           <div>
                             <Button color="green" onClick={this.handleAccept}>
                               Accept
@@ -127,12 +127,12 @@ export default class Consumer extends Component {
                             </Button>
                           </div>
                         )}
-                        {this.state.status === "accepted" && (
+                        {this.state.status === 'accepted' && (
                           <Button disabled color="green">
                             Accepted
                           </Button>
                         )}
-                        {this.state.status === "declined" && (
+                        {this.state.status === 'declined' && (
                           <Button disabled color="red">
                             Declined
                           </Button>

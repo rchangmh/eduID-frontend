@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import { render } from "react-dom"
-import { Switch, Route, Link, Redirect } from "react-router-dom"
+import React, { Component } from 'react'
+import { render } from 'react-dom'
+import { Switch, Route, Link, Redirect } from 'react-router-dom'
 import {
   Input,
   Menu,
@@ -11,47 +11,48 @@ import {
   Image,
   Header,
   Icon
-} from "semantic-ui-react"
-import axios from "axios"
+} from 'semantic-ui-react'
+import axios from 'axios'
+import update from 'immutability-helper'
 
 export default class Student extends Component {
   state = {
-    activeItem: "Profile",
+    activeItem: 'Profile',
     created: true,
-    menuItems: ["Profile", "Scores", "Colleges"],
+    menuItems: ['Profile', 'Scores', 'Colleges'],
     scores: {
-      GPA: "86.6",
-      SAT: "1300"
+      GPA: '86.6',
+      SAT: '1300'
     },
-    colleges: {
-      UMaryland: {
-        name: "University of Maryland",
+    colleges: [
+      {
+        name: 'University of Maryland',
         image:
-          "https://upload.wikimedia.org/wikipedia/en/thumb/3/3e/University_of_Maryland_seal.svg/1200px-University_of_Maryland_seal.svg.png",
-        status: "Not Submitted"
+          'https://upload.wikimedia.org/wikipedia/en/thumb/3/3e/University_of_Maryland_seal.svg/1200px-University_of_Maryland_seal.svg.png',
+        status: 'Not Submitted'
       },
-      Cornell: {
-        name: "Cornell University",
+      {
+        name: 'Cornell University',
         image:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png",
-        status: "Not Submitted"
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png',
+        status: 'Not Submitted'
       },
-      CMU: {
-        name: "Carnegie Mellon University",
+      {
+        name: 'Carnegie Mellon University',
         image:
-          "https://upload.wikimedia.org/wikipedia/en/thumb/b/bb/Carnegie_Mellon_University_seal.svg/1200px-Carnegie_Mellon_University_seal.svg.png",
-        status: "Not Submitted"
+          'https://upload.wikimedia.org/wikipedia/en/thumb/b/bb/Carnegie_Mellon_University_seal.svg/1200px-Carnegie_Mellon_University_seal.svg.png',
+        status: 'Not Submitted'
       }
-    },
-    fields: { Name: "", Address: "", Email: "", DOB: "" }
+    ],
+    fields: { Name: '', Address: '', Email: '', DOB: '' }
   }
 
   createId = () => {
     var myHeaders = new Headers()
-    myHeaders.append("Accept", "application/json")
+    myHeaders.append('Accept', 'application/json')
 
-    fetch("http://52.170.82.100:3000/api/Student", {
-      method: "GET",
+    fetch('http://52.170.82.100:3000/api/Student', {
+      method: 'GET',
       headers: myHeaders
     })
       .then(response => {
@@ -64,22 +65,21 @@ export default class Student extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   profileStyles = {
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "column",
-    justifyContent: "spaceBetween",
-    width: "300px"
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    justifyContent: 'spaceBetween',
+    width: '300px'
   }
 
-  apply = key => {
-    this.props.toggleCollegeView
+  handleApplyClick = (key, e) => {
     this.setState(prevState => ({
       ...prevState,
       colleges: {
         ...prevState.colleges,
-        UMaryland: {
-          ...prevState.colleges.UMaryland,
-          status: "Pending"
+        [key]: {
+          ...this.state.colleges.key,
+          status: 'Pending'
         }
       }
     }))
@@ -104,7 +104,7 @@ export default class Student extends Component {
           </Grid.Column>
 
           <Grid.Column stretched width={12}>
-            {activeItem === "Profile" && (
+            {activeItem === 'Profile' && (
               <div style={this.profileStyles}>
                 <Header as="h2" icon textAlign="center">
                   <Icon name="user" circular />
@@ -127,7 +127,7 @@ export default class Student extends Component {
                 </Header>
               </div>
             )}
-            {activeItem === "Scores" && (
+            {activeItem === 'Scores' && (
               <Card.Group>
                 {Object.entries(this.props.student.scores).map(
                   ([key, score]) => (
@@ -145,37 +145,41 @@ export default class Student extends Component {
                 )}
               </Card.Group>
             )}
-            {activeItem === "Colleges" && (
+            {activeItem === 'Colleges' && (
               <Card.Group>
-                {Object.entries(this.state.colleges).map(([key, college]) => (
+                {this.state.colleges.map(({ name, image, status }) => (
                   <Card>
                     <Card.Content>
-                      <Image floated="right" size="mini" src={college.image} />
-                      <Card.Header>{college.name}</Card.Header>
-                      <Card.Meta>{college.name}</Card.Meta>
-                      {college.status === "Submitted" && (
+                      <Image floated="right" size="mini" src={image} />
+                      <Card.Header>{name}</Card.Header>
+                      <Card.Meta>{name}</Card.Meta>
+                      {status === 'Submitted' && (
                         <Card.Description>
                           <p>Your application has been submitted.</p>
-                          <strong>Status: {college.status}</strong>
+                          <strong>Status: {status}</strong>
                         </Card.Description>
                       )}
                     </Card.Content>
                     <Card.Content extra>
                       <div>
-                        {college.status === "Not Submitted" && (
-                          <Button color="gray" onClick={key => this.apply()}>
+                        {status === 'Not Submitted' && (
+                          <Button
+                            ref="key"
+                            key={key}
+                            color="gray"
+                            onClick={e => this.handleApplyClick(key, e)}>
                             Apply
                           </Button>
                         )}
-                        {college.status === "Pending" && (
+                        {status === 'Pending' && (
                           <Button disabled color="yellow">
                             Pending
                           </Button>
                         )}
-                        {college.status === "Accepted" && (
+                        {status === 'Accepted' && (
                           <Button color="green">Accepted</Button>
                         )}
-                        {college.status === "Declined" && (
+                        {status === 'Declined' && (
                           <Button disabled color="red">
                             Declined
                           </Button>
